@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QR Code Scanner</title>
+</head>
+<body>
+    <h1>Scan QR Code for Attendance</h1>
+
+
+    <!-- Div to show camera and scan -->
+    <div id="reader" width="600px"></div>
+
+    <script>
+        function onScanSuccess(decodedText, decodedResult) {
+            // Handle the result here (decodedText is the QR code content)
+            console.log(`Code scanned: ${decodedText}`);
+            alert(`Code scanned: ${decodedText}`);
+
+            // Send scanned data to the backend
+            fetch("{% url 'scan_qrcode' %}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    'user_id': decodedText // Assuming the QR code contains the user ID
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                alert('An error occurred.');
+                console.error('Error:', error);
+            });
+        }
+
+        function onScanFailure(error) {
+            console.warn(`QR code scan error: ${error}`);
+        }
+
+        let html5QrCode = new Html5Qrcode("reader");
+
+        // Start the camera
+        html5QrCode.start(
+            { facingMode: "environment" },  // Default to back camera
+            { fps: 10, qrbox: 250 },
+            onScanSuccess,
+            onScanFailure
+        ).catch(err => {
+            console.error('Unable to start QR code scanning: ', err);
+        });
+    </script>
+</body>
+</html>

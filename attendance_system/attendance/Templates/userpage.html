@@ -1,0 +1,81 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'tempApp/bootstrap/css/bootstrap.min.css'%}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i,600,600i&amp;display=swap">
+    <link rel="stylesheet" href="{% static 'tempApp/fonts/simple-line-icons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'tempApp/css/baguetteBox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'tempApp/css/vanilla-zoom.min.css' %}">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/css/Navbar-Centered-Brand-Dark-icons.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">UNZA PROJECT</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{% url 'attendance_view' %}">Dashboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'scan_window' %}">scan qrcode </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'register_student' %}">register student </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'registered_user' %}">registered users</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    <h1>User List</h1>
+    {% if users %}
+    <table>
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>program_of_study</th>
+                <th>year_of_study</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.first_name }}</td>
+                <td>{{ student.last_name }}</td>
+                <td>{{ student.program_of_study }}</td>
+                <td>{{ student.year_of_study }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p>No users found.</p>
+    {% endif %}
+</body>
+</html>

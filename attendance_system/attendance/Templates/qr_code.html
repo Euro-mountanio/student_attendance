@@ -1,0 +1,23 @@
+<!-- myapp/templates/qr_code.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code for Student</title>
+</head>
+<body>
+    <h2>QR Code for Student ID: {{ student_id }}</h2>
+
+    <div>
+        <!-- Display the QR code image -->
+
+         <img src="data:image/png;base64,{{ qr_code_image }}" alt="QR Code">
+    </div>
+
+    <br>
+
+    <!-- Download QR code button -->
+    <a href="{% url 'download_qr' student_id=student_id %}" class="btn btn-primary">Download QR Code</a>
+</body>
+</html>
